@@ -12,22 +12,19 @@ basePath = config.get('domoticz', 'basePath')
 pin = config.get('raspberryPi', 'dht22Pin')
 idxSensor = config.get('domoticz', 'idxSensor')
 comfort = config.get('domoticz', 'comfortHumidityDefaultValue')
-
+loginCredentialBase64 = config.get('domoticz', 'loginCredentialBase64')
 endpoint = urlAndPort+'/'+basePath
 
-
-# only for fake test, this value will be updated next
-#temperature,humidity = 0, 60
-
-#22 is the sensor type(dht22) pin is get from property file
+#read data
 humidityRaw, temperatureRaw = Adafruit_DHT.read_retry(22, pin)
 print('{0:0.2f};{1:0.2f}%'.format(temperatureRaw, humidityRaw))
 
-
-
+#prepare data
 dataCluster = str('{0:0.2f}'.format(temperatureRaw))+';'+str('{0:0.2f}%'.format(humidityRaw))+';'+str(comfort)
-
 payloadTest = {'type': 'command', 'param': 'udevice', 'nvalue': 0, 'idx':  idxSensor, 'svalue': dataCluster}
-response=requests.get(endpoint,params=payloadTest)
+headers = {'Authorization': 'Basic '+str(loginCredentialBase64)}
+
+#call api
+response=requests.get(endpoint,params=payloadTest,headers=headers)
 
 
