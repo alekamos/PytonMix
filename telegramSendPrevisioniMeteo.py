@@ -59,16 +59,16 @@ for i in range(len(previsionSourceList)):
         file.write(currentPrevision)
         file.close()
     
-    #sent telegram message to chat
-    message = descrPrevisioniList[i]+' '+currentPrevision
-    bot = telegram.Bot(token=telegramTokenBot)
-    logging.info("Info about telegram bot: %s",bot.get_me());
-    bot.send_message(chat_id=telegramChatId_1, text=message,parse_mode=telegram.ParseMode.MARKDOWN)
-    logging.info("Telegram message send");
+        #sent telegram message to chat
+        message = descrPrevisioniList[i]+' '+currentPrevision
+        bot = telegram.Bot(token=telegramTokenBot)
+        logging.info("Info about telegram bot: %s",bot.get_me());
+        bot.send_message(chat_id=telegramChatId_1, text=message,parse_mode=telegram.ParseMode.MARKDOWN)
+        logging.info("Telegram message send");
         
-    logging.debug("Status of telegram channel: %s",channelUpdateStatus);
-    if channelUpdateStatus=='ON':
-        bot.send_message(chat_id=telegramChannel_1, text=message,parse_mode=telegram.ParseMode.MARKDOWN)
-        logging.debug("Telegram message send to channel");
+        logging.debug("Status of telegram channel: %s",channelUpdateStatus);
+        if channelUpdateStatus=='ON':
+            bot.send_message(chat_id=telegramChannel_1, text=message,parse_mode=telegram.ParseMode.MARKDOWN)
+            logging.debug("Telegram message send to channel");
 
 
