@@ -51,8 +51,8 @@ for i in range(len(previsionSourceList)):
 
     #se diversi i dati sono stati aggiornati, se uguali nessun aggiornamento
     if len(currentPrevision)<30:
-        logging.error("Lunghezza inferiore a 30 caratteri, testo non valido")
-    if lastPrevision == currentPrevision:
+        logging.warn("Lunghezza inferiore a 30 caratteri, testo non valido")
+    elif lastPrevision == currentPrevision:
         logging.info("Same data, nothing to do here");
     else:
         file = io.open(nameFilePrevisionList[i], 'w')
