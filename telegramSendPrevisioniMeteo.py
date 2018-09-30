@@ -50,8 +50,10 @@ for i in range(len(previsionSourceList)):
     logging.debug("Data from file: %s last prevision: %s",nameFilePrevisionList[i],lastPrevision)
 
     #se diversi i dati sono stati aggiornati, se uguali nessun aggiornamento
-    if len(currentPrevision)<30:
-        logging.warn("Lunghezza inferiore a 30 caratteri, testo non valido")
+    if len(currentPrevision)<300:
+        logging.warn("Lunghezza inferiore a 300 caratteri, testo non valido")
+    elif len(currentPrevision)>2000:
+        logging.warn("Lunghezza superiore a 2000 caratteri, testo non valido")
     elif lastPrevision == currentPrevision:
         logging.info("Same data, nothing to do here");
     else:
