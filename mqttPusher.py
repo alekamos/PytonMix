@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 import configparser
+import json
 
 config = configparser.ConfigParser()
 config.read('nasProperties.properties')
@@ -12,9 +13,16 @@ print(host,port)
 temp = 52
 hum = 45
 
-payloadTest = {"""temperature""": temp, "humidity" : hum}
-print(payloadTest)
+# object to send
+data = {
+  "temperature": temp,
+  "humidity": hum
+}
+
+# convert into JSON:
+payloadContent = json.dumps(data)
+
 
 client = mqtt.Client()
 client.connect(host, int(port))
-client.publish(topic="TestingTopic", payload=payloadTest, qos=0, retain=False)
+client.publish(topic="TestingTopic", payload=payloadContent, qos=0, retain=False)
