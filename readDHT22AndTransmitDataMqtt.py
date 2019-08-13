@@ -12,6 +12,7 @@ config.read('nasProperties.properties')
 
 host = config.get('mqtt', 'host')
 port = config.get('mqtt', 'port')
+topic = config.get('mqtt', 'topicDht22')
 pin = config.get('raspberryPi', 'dht22Pin')
 
 
@@ -19,11 +20,11 @@ pin = config.get('raspberryPi', 'dht22Pin')
 humidityRaw, temperatureRaw = Adafruit_DHT.read_retry(22, pin)
 
 #print data for debugging
-print('{0:0.2f};{1:0.2f}%'.format(temperatureRaw, humidityRaw))
+print('{0:0.2f};{1:0.2f}'.format(temperatureRaw, humidityRaw))
 
 #prepare data to send
 temp = str('{0:0.2f}'.format(temperatureRaw))
-hum = str('{0:0.2f}%'.format(humidityRaw))
+hum = str('{0:0.2f}'.format(humidityRaw))
 data = {"temperature": temp,"humidity": hum}
 # convert into JSON:
 payloadContent = json.dumps(data)
@@ -31,7 +32,7 @@ payloadContent = json.dumps(data)
 #pushmqt
 client = mqtt.Client()
 client.connect(host, int(port))
-client.publish(topic="TestingTopic", payload=payloadContent, qos=0, retain=False)
+client.publish(topic=topic, payload=payloadContent, qos=0, retain=False)
 
 
 
